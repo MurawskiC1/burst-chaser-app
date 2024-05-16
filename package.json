@@ -1,0 +1,25 @@
+{
+  "name": "burst-chaser-app",
+  "version": "1.0.0",
+  "description": "Burst Chaser Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(https://github.com/MurawskiC1/burst-chaser-app.git)"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Carter Murawski",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0",
+    "pg": "^8.11.5"
+  }
+}
