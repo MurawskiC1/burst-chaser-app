@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql');
+const cors = require('cors');
 
 // Initialize the Express application
 const app = express();
@@ -24,6 +25,7 @@ db.connect(err => {
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(cors());
 
 // Define a simple route
 app.get('/', (req, res) => {

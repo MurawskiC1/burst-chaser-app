@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/MurawskiC1/burst-chaser-app#readme",
   "dependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "open": "^10.1.0",
