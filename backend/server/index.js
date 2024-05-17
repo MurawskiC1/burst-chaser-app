@@ -1,7 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
-
+const table = "new_table"
 // Initialize the Express application
 const app = express();
 
@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 });
 
 // Define a route to fetch data from the new_table
-app.get("/new_table", (req, res) => {
+app.get(`/${table}`, (req, res) => {
     const q = "SELECT * FROM new_table";
     db.query(q, (err, data) => {
         if (err) return res.json(err);
@@ -41,7 +41,7 @@ app.get("/new_table", (req, res) => {
     });
 });
 
-app.post("/new_table", (req, res) => {
+app.post(`/${table}`, (req, res) => {
     const q = "INSERT INTO new_table (`name`, `description`, `number`) VALUES (?)";
     const values = [
         req.body.name,
