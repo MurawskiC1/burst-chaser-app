@@ -1,11 +1,16 @@
 
 import './App.css'
-
+import { BrowserRouter as Router } from 'react-router-dom'
+import AppRoutes from './AppRoutes'
+import Navbar from './components/Navbar'
 function App() {
 
   return (
     <>
-      <h1>Full Stack All ME</h1>
+      <Router>
+        <Navbar />
+        <AppRoutes />
+      </Router>
     </>
   )
 }

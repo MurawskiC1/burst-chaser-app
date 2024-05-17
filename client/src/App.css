@@ -1,0 +1,121 @@
+.navbar {
+  background-color: Black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  width: 100%;
+  height: 80px;
+  transition: top 0.3s, height 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.341);
+
+}
+
+.company {
+  margin-left: 30px;
+}
+
+.navbar ul {
+  max-width: 100%;
+  /* Ensure ul doesn't exceed parent width */
+  padding: 0;
+  margin: 0;
+  margin-right: 20px;
+  list-style: none;
+  display: flex;
+  text-decoration: none;
+  transition: 0.4s;
+  overflow-x: auto;
+  /* Add horizontal scroll for overflow */
+}
+
+.navbar li {
+
+  margin: 0;
+}
+
+.navbar-buttons {
+  font-size: 20px;
+
+}
+
+.navbar a {
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+  display: flex;
+  padding: .25rem;
+  align-items: center;
+  font-size: 30px;
+}
+
+.navbar-button {
+  color: gray;
+}
+
+
+
+/* Hamburger menu styles */
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 5px 0;
+  transition: 0.4s;
+}
+
+/* Active state for hamburger menu */
+.bar.active:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.bar.active:nth-child(2) {
+  opacity: 0;
+}
+
+.bar.active:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 1000px) {
+  .navbar ul {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    background-color: purple;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    z-index: 5;
+    overflow-x: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.341);
+    /* Hide horizontal scroll for small screens */
+  }
+
+  .navbar li {
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .navbar ul.active {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hamburger-menu {
+    display: block;
+  }
+}

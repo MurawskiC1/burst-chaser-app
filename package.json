@@ -1,0 +1,33 @@
+{
+  "name": "burst-chaser-app",
+  "version": "1.0.0",
+  "description": "Burst Chaser Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\" \"npm run open:chrome\"",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd client && npm run dev",
+    "open:chrome": "wait-on http://localhost:5173 && open -a 'Google Chrome' http://localhost:5173"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MurawskiC1/burst-chaser-app.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Carter T Murawski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MurawskiC1/burst-chaser-app/issues"
+  },
+  "homepage": "https://github.com/MurawskiC1/burst-chaser-app#readme",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "open": "^10.1.0",
+    "wait-on": "^7.2.0"
+  }
+}
