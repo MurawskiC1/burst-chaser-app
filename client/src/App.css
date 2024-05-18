@@ -1,3 +1,4 @@
+/*------------------------------------NAVBAR----------------------------------------*/
 .navbar {
   background-color: Black;
   color: white;
@@ -118,4 +119,48 @@
   .hamburger-menu {
     display: block;
   }
+}
+
+/*------------------------------------------DATA-------------------------------------*/
+
+.data-container {
+  margin-top: 10vh;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  width: 90vw;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow-y: auto;
+  /* Ensure padding and borders are included in the element's total width and height */
+}
+
+.data-container table {
+  width: 100%;
+  /* Ensure table takes full width of the container */
+  /* Prevent the table from exceeding container's width */
+  border-collapse: collapse;
+
+
+
+
+}
+
+.data-container th,
+.data-container td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.data-container th {
+  background-color: black;
+  color: white;
+  position: sticky;
+  top: 0;
+}
+
+.data-container tr:nth-child(even) {
+  background-color: rgba(118, 218, 255, 0.255);
 }

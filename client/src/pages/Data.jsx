@@ -1,28 +1,58 @@
-import React from 'react';
-import { useBursts, useAddBurst } from '../functions/Exports';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Data(props) {
-    const bursts = useBursts();
+    const [bursts, setBursts] = useState(props.bursts);
+    const [searchQuery, setSearchQuery] = useState('');
 
-    // Define a function to handle adding a burst
-    const handleAddBurst = () => {
-        useAddBurst("Campbell", "IS", 57); // Call useAddBurst when the button is clicked
+    // Function to handle search input change
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
     };
+
+    // Filter bursts based on search query
+    const filteredBursts = bursts.filter(burst =>
+        burst.Burst_Name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <div>
-            {bursts.map((burst, index) => (
-                <div key={index}>
-                    {burst.name}
-                    {burst.description}
-                    {burst.number}
-                </div>
-            ))}
-            {/* Button to add a burst */}
-            <button onClick={handleAddBurst}>Add</button>
+            <div className='search-container'>
+                <input
+                    type='text'
+                    placeholder='Search by Burst Name'
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                />
+            </div>
+            <div className='data-container'>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Burst Name</th>
+                            <th>Burst ID</th>
+                            <th>Simple</th>
+                            <th>Extended</th>
+                            <th>Other</th>
+                            <th>Too Noisy</th>
+                            <th>Verified</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredBursts.map((burst) => (
+                            <tr key={burst.BurstID}>
+                                <td><Link to={`/${burst.Burst_Name}`}>{burst.Burst_Name}</Link></td>
+                                <td>{burst.BurstID}</td>
+                                <td>{burst.Simple || 'N/A'}</td>
+                                <td>{burst.Extended || 'N/A'}</td>
+                                <td>{burst.Other || 'N/A'}</td>
+                                <td>{burst.Too_Noisy || 'N/A'}</td>
+                                <td>{burst.Verify || 'N/A'}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }
-
-
-

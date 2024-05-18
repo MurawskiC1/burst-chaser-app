@@ -1,7 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
-const table = "new_table"
+const table = "pulse_shape"
 // Initialize the Express application
 const app = express();
 
@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 
 // Define a route to fetch data from the new_table
 app.get(`/${table}`, (req, res) => {
-    const q = "SELECT * FROM new_table";
+    const q = `SELECT * FROM ${table} $`;
     db.query(q, (err, data) => {
         if (err) return res.json(err);
         return res.json(data); // return the data to the client

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const table = "new_table";
+const table = "pulse_shape";
 
 export function useBursts() {
     const [out, setOut] = useState([]);
@@ -30,7 +30,7 @@ export function useAddBurst(name, desc, number) {
         };
 
         try {
-            const res = await axios.post(`http://localhost:8800/${table}`, burst);
+            const res = await axios.post(`http://localhost:8800/new_table`, burst);
             // Handle the result here if needed
         } catch (err) {
             console.error(err);
