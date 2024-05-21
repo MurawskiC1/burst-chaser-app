@@ -20,6 +20,8 @@ export default function Preview(props) {
         <div>
             {/* Display the imported image */}
             <img src={image} alt={burst.Burst_PNG} />
+            <h1>{burst.Burst_Name}</h1>
+
         </div>
     );
 }

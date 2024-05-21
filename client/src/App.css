@@ -128,7 +128,8 @@
   margin-left: 5vw;
   margin-right: 5vw;
   width: 90vw;
-  height: 70vh;
+  height: auto;
+  max-height: 70vh;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
@@ -138,6 +139,7 @@
 
 .data-container table {
   width: 100%;
+
   /* Ensure table takes full width of the container */
   /* Prevent the table from exceeding container's width */
   border-collapse: collapse;

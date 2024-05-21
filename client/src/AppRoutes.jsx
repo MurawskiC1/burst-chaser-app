@@ -10,7 +10,7 @@ export default function AppRoutes(props) {
         <div>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/data" element={<Data bursts={bursts} />} />
+                <Route path="/data" element={<Data />} />
                 {bursts.map((burst, index) => {
                     return (
                         <React.Fragment key={index}>
