@@ -3,16 +3,17 @@ import axios from 'axios';
 
 const table = "pulse_shape";
 
-export function useBursts(table, f) {
+export function useBursts(table, filter = '', limit = '') {
     const [out, setOut] = useState([]);
-    const filter = f || '';
+
 
     useEffect(() => {
         const fetchAllBursts = async () => {
             try {
                 const res = await axios.get(`http://localhost:8800/${table}`, {
                     params: {
-                        filter: filter
+                        filter: filter,
+                        limit: limit
                     }
                 });
                 setOut(res.data);

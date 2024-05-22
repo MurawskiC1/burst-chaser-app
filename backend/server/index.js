@@ -34,12 +34,23 @@ app.get('/', (req, res) => {
 
 // Define a route to fetch data from the new_table
 app.get(`/${table}`, (req, res) => {
-    const q = `SELECT * FROM ${table} $`;
+    const filter = req.query.filter;// Get filter value from query parameter
+    const limit = req.query.limit;
+    let q = `SELECT * FROM ${table}`;
+    if (filter !== '') {
+        q += ` WHERE ${filter}`;
+    }
+    if (limit != '') {
+        q += ` LIMIT ${limit}`
+    }
+
     db.query(q, (err, data) => {
         if (err) return res.json(err);
-        return res.json(data); // return the data to the client
+        return res.json(data); // Return the data to the client
     });
 });
+
+
 
 app.post(`/${table}`, (req, res) => {
     const q = "INSERT INTO new_table (`name`, `description`, `number`) VALUES (?)";

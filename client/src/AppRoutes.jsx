@@ -5,7 +5,7 @@ import Preview from "./pages/Preview"
 import Home from "./pages/Home"
 import Data from "./pages/Data"
 export default function AppRoutes(props) {
-    const bursts = useBursts();
+    const bursts = useBursts("pulse_shape");
     return (
         <div>
             <Routes>

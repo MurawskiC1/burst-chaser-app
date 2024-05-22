@@ -1,33 +1,27 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useBursts } from '../functions/Exports';
 
-
 export default function Data(props) {
-    const bursts = useBursts("pulse_shape")
+    const [filter, setFilter] = useState('');
+    const [limit, setLimit] = useState(50);
     const [searchQuery, setSearchQuery] = useState('');
-    const [type, setType] = useState('');
 
-    // Function to handle search input change
+    const handleTypeChange = (newType) => {
+        setFilter(`verify LIKE '${newType}%'`);
+    };
+
+
+    const bursts = useBursts("pulse_shape", filter, limit);
+
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
-    const handleTypeChange = (newType) => {
-        setType(newType);
-    };
-
-    // Filter bursts based on search query and type
-    const filteredBursts = bursts.filter(burst => {
-        const matchesSearchQuery =
-            burst.Burst_Name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            burst.Verify.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            burst.BurstID.toLowerCase().includes(searchQuery.toLowerCase());
-
-        const matchesType = type === '' || type === 'None' || burst.Verify.toLowerCase() === type.toLowerCase();
-
-        return matchesSearchQuery && matchesType;
-    });
+    const filteredBursts = bursts.filter(burst =>
+        burst.Burst_Name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        burst.BurstID.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <div>
@@ -64,7 +58,7 @@ export default function Data(props) {
                     <tbody>
                         {filteredBursts.map((burst) => (
                             <tr key={burst.BurstID}>
-                                <td><img src={`assets/BurstPhotos/${burst.Burst_PNG}`} /></td>
+                                <td><img src={`assets/BurstPhotos/${burst.Burst_PNG}`} alt={burst.Burst_Name} /></td>
                                 <td><Link to={`${burst.Burst_Name}`}>{burst.Burst_Name}</Link></td>
                                 <td>{burst.BurstID}</td>
                                 <td>{burst.Simple}</td>
@@ -72,8 +66,6 @@ export default function Data(props) {
                                 <td>{burst.Other}</td>
                                 <td>{burst.Too_Noisy}</td>
                                 <td>{burst.Verify}</td>
-
-
                             </tr>
                         ))}
                     </tbody>
@@ -82,3 +74,5 @@ export default function Data(props) {
         </div>
     );
 }
+
+
