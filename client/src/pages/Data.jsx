@@ -7,20 +7,60 @@ export default function Data(props) {
     const [start, setStart] = useState(0);
     const [end, setEnd] = useState(50);
     const [searchQuery, setSearchQuery] = useState('');
+    const [appliedFilters, setAppliedFilters] = useState([]);
 
     const handleTypeChange = (newType) => {
+
         setFilter(currentFilter => {
-            console.log(currentFilter)
+            setStart(0);
+            setEnd(50);
+            if (newType == "All") {
+                setAppliedFilters([])
+                return '';
+            }
             if (newType == null) {
-                return 'verify = ""'
+                setAppliedFilters(["Not Classified"]);
+                return 'verify = ""';
+            }
+            if (appliedFilters.includes(newType)) {
+                return currentFilter
             }
             if (currentFilter == "" || currentFilter.includes("AND") || currentFilter.includes("=")) {
-                return `verify LIKE '%${newType}%'`
+                setAppliedFilters([newType]);
+                return `verify LIKE '%${newType}%'`;
             } else {
-                return currentFilter + ` AND verify LIKE '%${newType}%'`
+                setAppliedFilters(current => [...current, newType]);
+                return currentFilter + ` AND verify LIKE '%${newType}%'`;
             }
-        })
-    }
+        });
+        //console.log(filter)
+        //console.log(appliedFilters)
+    };
+
+    const handleRemoveFilter = (toRemove) => {
+        // Filter out the item to remove from appliedFilters
+        const updatedFilters = appliedFilters.filter(filter => filter !== toRemove);
+        // Update the appliedFilters state
+        setAppliedFilters(updatedFilters);
+
+        // Build the new filter string based on the remaining filters
+        let newFilter = '';
+        updatedFilters.forEach((filter, index) => {
+            if (index === 0) {
+                newFilter += `verify LIKE '%${filter}%'`;
+            } else {
+                newFilter += ` AND verify LIKE '%${filter}%'`;
+            }
+        });
+
+        // Update the filter state with the new filter string
+        setFilter(newFilter);
+    };
+
+
+
+
+
 
     const bursts = useBursts("pulse_shape", filter);
 
@@ -63,12 +103,19 @@ export default function Data(props) {
                     onChange={handleSearchChange}
                 />
                 <div className='filter-buttons'>
-                    <button onClick={() => handleTypeChange('')}>All</button>
+                    <button onClick={() => handleTypeChange('All')}>All</button>
                     <button onClick={() => handleTypeChange('Simple')}>Simple</button>
                     <button onClick={() => handleTypeChange('Extended')}>Extended</button>
                     <button onClick={() => handleTypeChange('Other')}>Other</button>
                     <button onClick={() => handleTypeChange('Too Noisy')}>Too Noisy</button>
                     <button onClick={() => handleTypeChange(null)}>Not Classified</button>
+                </div>
+
+                <div className='applied-filters'>
+                    {appliedFilters.map((filter, index) => (
+                        <button key={index} onClick={() => handleRemoveFilter(filter)}>{filter}</button>
+
+                    ))}
                 </div>
             </div>
             <div className='data-container'>
