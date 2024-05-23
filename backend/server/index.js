@@ -36,16 +36,17 @@ app.get('/', (req, res) => {
 app.get(`/${table}`, (req, res) => {
     const filter = req.query.filter;// Get filter value from query parameter
     const sort = req.query.sort;
-    let q = `SELECT * FROM ${table}`;
-
+    let select = `SELECT * FROM ${table}`;
+    let order = "";
+    let where = "";
     if (sort !== '') {
-        q += ` ORDER BY ${sort}`
+        order += ` ORDER BY ${sort}`
     }
 
     if (filter !== '') {
-        q += ` WHERE ${filter}`;
+        where += ` WHERE ${filter}`;
     }
-
+    const q = select + where + order
     db.query(q, (err, data) => {
         if (err) return res.json(err);
         return res.json(data); // Return the data to the client

@@ -9,12 +9,15 @@ export default function Data(props) {
     const [start, setStart] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [appliedFilters, setAppliedFilters] = useState([]);
-
-    const bursts = useBursts("pulse_shape", filter, sort);
+    const [conf, setConf] = useState(0);
+    const [confFilter, setConfFilter] = useState(`Primary_Confidence_Level >= ${conf / 100}`)
+    const bursts = useBursts("pulse_shape", confFilter + filter, sort);
 
     useEffect(() => {
         setStart(0);
-    }, [filter, sort, render]);
+    }, [filter, sort, render, conf + filter, confFilter]);
+
+
 
     const handleTypeChange = (newType) => {
         setFilter((currentFilter) => {
@@ -25,14 +28,14 @@ export default function Data(props) {
             }
             if (newType === null) {
                 setAppliedFilters(["Not Classified"]);
-                return 'verify = ""';
+                return ' AND verify = ""';
             }
             if (appliedFilters.includes(newType)) {
                 return currentFilter;
             }
-            if (!currentFilter || currentFilter.includes("AND") || currentFilter.includes("=")) {
+            if (!currentFilter || currentFilter.includes("verify") || currentFilter.includes("=")) {
                 setAppliedFilters([newType]);
-                return `verify LIKE '%${newType}%'`;
+                return ` AND verify LIKE '%${newType}%'`;
             } else {
                 setAppliedFilters((current) => [...current, newType]);
                 return `${currentFilter} AND verify LIKE '%${newType}%'`;
@@ -40,10 +43,17 @@ export default function Data(props) {
         });
     };
 
+
     const handleLimit = (limit) => {
         setRender(parseInt(limit, 10));
         setStart(0); // Reset start to 0 when the limit changes
     };
+
+    const handleConfidenceLevel = (level) => {
+        setConf(level)
+        setConfFilter(`Primary_Confidence_Level >= ${level / 100}`)
+
+    }
 
     const handleSortChange = (toSort) => {
         setSort((current) => {
@@ -112,6 +122,10 @@ export default function Data(props) {
                             {filter}
                         </button>
                     ))}
+                </div>
+                <div className="confidence-interval">
+                    <input type="range" value={conf} min="0" max="100" onChange={(e) => handleConfidenceLevel(e.target.value)} />
+                    {conf}%
                 </div>
             </div>
             <div className='data-container'>
