@@ -166,3 +166,12 @@
 .data-container tr:nth-child(even) {
   background-color: rgba(118, 218, 255, 0.255);
 }
+
+/*------------------------------------Boxes View-------------------------------------*/
+
+.view-boxes img {
+
+  height: 200px;
+  width: auto;
+
+}

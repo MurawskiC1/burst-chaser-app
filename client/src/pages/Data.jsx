@@ -115,7 +115,7 @@ export default function Data(props) {
                 </div>
             </div>
             <div className='data-container'>
-                <table>
+                <table className="view-boxes">
                     <thead>
                         <tr>
                             <th>Index</th>
@@ -133,7 +133,7 @@ export default function Data(props) {
                         {filteredBursts.slice(start, end).map((burst, index) => (
                             <tr key={burst.BurstID}>
                                 <td>{start + index + 1}</td>
-                                <td><img className="excel-view" src={`../../public/BurstPhotos/${burst.Burst_PNG}`} alt={burst.Burst_Name} /></td>
+                                <td><img src={`../../public/BurstPhotos/${burst.Burst_PNG}`} alt={burst.Burst_Name} /></td>
                                 <td><Link to={`${burst.Burst_Name}`}>{burst.Burst_Name}</Link></td>
                                 <td>{burst.BurstID}</td>
                                 <td>{burst.Simple}</td>
