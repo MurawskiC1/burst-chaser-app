@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const table = "pulse_shape";
 
-export function useBursts(table, filter = '', limit = '') {
+export function useBursts(table, filter = '', sort = '') {
     const [out, setOut] = useState([]);
 
 
@@ -13,7 +13,7 @@ export function useBursts(table, filter = '', limit = '') {
                 const res = await axios.get(`http://localhost:8800/${table}`, {
                     params: {
                         filter: filter,
-                        limit: limit
+                        sort: sort
                     }
                 });
                 setOut(res.data);
@@ -22,7 +22,7 @@ export function useBursts(table, filter = '', limit = '') {
             }
         };
         fetchAllBursts();
-    }, [table, filter]); // Include table and filter in the dependency array
+    }, [table, filter, sort]); // Include table and filter in the dependency array
 
     return out;
 }

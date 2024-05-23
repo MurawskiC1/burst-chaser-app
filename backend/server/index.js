@@ -35,13 +35,15 @@ app.get('/', (req, res) => {
 // Define a route to fetch data from the new_table
 app.get(`/${table}`, (req, res) => {
     const filter = req.query.filter;// Get filter value from query parameter
-    const limit = req.query.limit;
+    const sort = req.query.sort;
     let q = `SELECT * FROM ${table}`;
+
+    if (sort !== '') {
+        q += ` ORDER BY ${sort}`
+    }
+
     if (filter !== '') {
         q += ` WHERE ${filter}`;
-    }
-    if (limit != '') {
-        q += ` LIMIT ${limit}`
     }
 
     db.query(q, (err, data) => {

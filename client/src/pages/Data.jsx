@@ -1,107 +1,103 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useBursts } from '../functions/Exports';
 
 export default function Data(props) {
     const [filter, setFilter] = useState('');
+    const [sort, setSort] = useState('');
+    const [render, setRender] = useState(50);
     const [start, setStart] = useState(0);
-    const [end, setEnd] = useState(50);
     const [searchQuery, setSearchQuery] = useState('');
     const [appliedFilters, setAppliedFilters] = useState([]);
 
-    const handleTypeChange = (newType) => {
+    const bursts = useBursts("pulse_shape", filter, sort);
 
-        setFilter(currentFilter => {
+    useEffect(() => {
+        setStart(0);
+    }, [filter, sort, render]);
+
+    const handleTypeChange = (newType) => {
+        setFilter((currentFilter) => {
             setStart(0);
-            setEnd(50);
-            if (newType == "All") {
-                setAppliedFilters([])
+            if (newType === "All") {
+                setAppliedFilters([]);
                 return '';
             }
-            if (newType == null) {
+            if (newType === null) {
                 setAppliedFilters(["Not Classified"]);
                 return 'verify = ""';
             }
             if (appliedFilters.includes(newType)) {
-                return currentFilter
+                return currentFilter;
             }
-            if (currentFilter == "" || currentFilter.includes("AND") || currentFilter.includes("=")) {
+            if (!currentFilter || currentFilter.includes("AND") || currentFilter.includes("=")) {
                 setAppliedFilters([newType]);
                 return `verify LIKE '%${newType}%'`;
             } else {
-                setAppliedFilters(current => [...current, newType]);
-                return currentFilter + ` AND verify LIKE '%${newType}%'`;
+                setAppliedFilters((current) => [...current, newType]);
+                return `${currentFilter} AND verify LIKE '%${newType}%'`;
             }
         });
-        //console.log(filter)
-        //console.log(appliedFilters)
+    };
+
+    const handleLimit = (limit) => {
+        setRender(parseInt(limit, 10));
+        setStart(0); // Reset start to 0 when the limit changes
+    };
+
+    const handleSortChange = (toSort) => {
+        setSort((current) => {
+            if (!current.includes(toSort)) {
+                return `${toSort} DESC`;
+            } else {
+                return current.includes("DESC") ? `${toSort} ASC` : `${toSort} DESC`;
+            }
+        });
     };
 
     const handleRemoveFilter = (toRemove) => {
-        // Filter out the item to remove from appliedFilters
-        const updatedFilters = appliedFilters.filter(filter => filter !== toRemove);
-        // Update the appliedFilters state
+        const updatedFilters = appliedFilters.filter((filter) => filter !== toRemove);
         setAppliedFilters(updatedFilters);
 
-        // Build the new filter string based on the remaining filters
         let newFilter = '';
         updatedFilters.forEach((filter, index) => {
-            if (index === 0) {
-                newFilter += `verify LIKE '%${filter}%'`;
-            } else {
-                newFilter += ` AND verify LIKE '%${filter}%'`;
-            }
+            newFilter += index === 0 ? `verify LIKE '%${filter}%'` : ` AND verify LIKE '%${filter}%'`;
         });
 
-        // Update the filter state with the new filter string
         setFilter(newFilter);
     };
-
-
-
-
-
-
-    const bursts = useBursts("pulse_shape", filter);
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
-    const filteredBursts = bursts.filter(burst =>
+    const filteredBursts = bursts.filter((burst) =>
         burst.Burst_Name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         burst.BurstID.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const handleChangePage = (direction) => {
-        const change = end - start
-        if (direction == "next" && start + change <= filteredBursts.length) {
-            setStart(page => {
-                return page + change
-            })
-            setEnd(page => {
-                return page + change
-            })
+        const change = render;
+        if (direction === "next" && start + change < filteredBursts.length) {
+            setStart((prev) => prev + change);
+        } else if (direction === "previous" && start - change >= 0) {
+            setStart((prev) => prev - change);
         }
-        if (direction == "previous" && start - change >= 0) {
-            setStart(page => {
-                return page - change
-            })
-            setEnd(page => {
-                return page - change
-            })
-        }
-    }
+    };
+
+    const end = start + render;
 
     return (
         <div>
-            <div className='search-container'>
-                <input
-                    type='text'
-                    placeholder='Search by Burst Name'
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                />
+            <div className="filter-container">
+                <div className='search-container'>
+                    <input
+                        type='text'
+                        placeholder='Search by Burst Name or ID'
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                    />
+                </div>
                 <div className='filter-buttons'>
                     <button onClick={() => handleTypeChange('All')}>All</button>
                     <button onClick={() => handleTypeChange('Simple')}>Simple</button>
@@ -110,11 +106,11 @@ export default function Data(props) {
                     <button onClick={() => handleTypeChange('Too Noisy')}>Too Noisy</button>
                     <button onClick={() => handleTypeChange(null)}>Not Classified</button>
                 </div>
-
                 <div className='applied-filters'>
                     {appliedFilters.map((filter, index) => (
-                        <button key={index} onClick={() => handleRemoveFilter(filter)}>{filter}</button>
-
+                        <button key={index} onClick={() => handleRemoveFilter(filter)}>
+                            {filter}
+                        </button>
                     ))}
                 </div>
             </div>
@@ -124,20 +120,20 @@ export default function Data(props) {
                         <tr>
                             <th>Index</th>
                             <th>Image</th>
-                            <th>Burst Name</th>
-                            <th>Burst ID</th>
-                            <th>Simple</th>
-                            <th>Extended</th>
-                            <th>Other</th>
-                            <th>Too Noisy</th>
-                            <th>Verified</th>
+                            <th onClick={() => handleSortChange("Burst_Name")}>Burst Name</th>
+                            <th onClick={() => handleSortChange("BurstID")}>Burst ID</th>
+                            <th onClick={() => handleSortChange("Simple")}>Simple</th>
+                            <th onClick={() => handleSortChange("Extended")}>Extended</th>
+                            <th onClick={() => handleSortChange("Other")}>Other</th>
+                            <th onClick={() => handleSortChange("Too_Noisy")}>Too Noisy</th>
+                            <th onClick={() => handleSortChange("verify")}>Verified</th>
                         </tr>
                     </thead>
                     <tbody>
                         {filteredBursts.slice(start, end).map((burst, index) => (
                             <tr key={burst.BurstID}>
                                 <td>{start + index + 1}</td>
-                                <td><img src={`assets/BurstPhotos/${burst.Burst_PNG}`} alt={burst.Burst_Name} /></td>
+                                <td><img className="excel-view" src={`../../public/BurstPhotos/${burst.Burst_PNG}`} alt={burst.Burst_Name} /></td>
                                 <td><Link to={`${burst.Burst_Name}`}>{burst.Burst_Name}</Link></td>
                                 <td>{burst.BurstID}</td>
                                 <td>{burst.Simple}</td>
@@ -148,19 +144,19 @@ export default function Data(props) {
                             </tr>
                         ))}
                     </tbody>
-
                 </table>
-
             </div>
-
-            <div className="flippage-containter">
-                <button onClick={() => handleChangePage("next")}>Next</button>
-                <div>Page Number {Math.floor(end / (end - start))} of {Math.floor(filteredBursts.length / (end - start)) + 1} </div>
-                <button onClick={() => handleChangePage("previous")}>Previous</button>
+            <div className="page-edit-container">
+                <button onClick={() => handleChangePage("previous")} disabled={start === 0}>Previous</button>
+                <div>Page Number {Math.floor(start / render) + 1} of {Math.ceil(filteredBursts.length / render)}</div>
+                <button onClick={() => handleChangePage("next")} disabled={start + render >= filteredBursts.length}>Next</button>
+                <select value={render} onChange={(e) => handleLimit(e.target.value)}>
+                    <option value={25}>25</option>
+                    <option value={50}>50</option>
+                    <option value={100}>100</option>
+                    <option value={filteredBursts.length}>All</option>
+                </select>
             </div>
-
         </div>
-    )
-};
-
-
+    );
+}
