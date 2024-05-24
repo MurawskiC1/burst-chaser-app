@@ -175,3 +175,27 @@
   width: auto;
 
 }
+
+/*-----------------------------------Filters Container-------------------------------*/
+.open-filters {
+  margin-left: 50vw
+}
+
+.box {
+  position: fixed;
+  top: 0;
+  margin-top: 80px;
+  left: -300px;
+  /* Adjust this value to the width of the box */
+  width: 300px;
+  /* Adjust this value to your desired width */
+  height: 100%;
+  background-color: lightblue;
+  color: black;
+  transition: left 0.3s ease;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.box.open {
+  left: 0;
+}

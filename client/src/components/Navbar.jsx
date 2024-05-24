@@ -30,9 +30,10 @@ export default function Navbar() {
             <ul className={`menu ${showMenu ? 'active' : ''}`}>
                 <li>
                     <Link to="data" onClick={handleLinkClick}>
-                        <h1 className="navbar-buttons">Data</h1>
+                        <h1 className="navbar-buttons">Explore</h1>
                     </Link>
                 </li>
+
             </ul>
         </nav>
     );
