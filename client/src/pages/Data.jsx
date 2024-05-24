@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { SearchInput, FilterButtons, AppliedFilters, ConfidenceSlider } from '../components/FilterComponents';
+import { FilterButtons, AppliedFilters, ConfidenceSlider } from '../components/FilterComponents';
+import { SearchInput } from '../components/SearchInput'
 import { BurstTable } from '../components/BurstTable';
 import { PaginationControls } from '../components/PaginationControls';
 import { useDataHandlers } from '../functions/DataHandler';
-
+import SlidingContainer from '../components/SlidingContainer';
 export default function Data(props) {
     const [filter, setFilter] = useState('');
     const [sort, setSort] = useState('');
@@ -11,6 +12,7 @@ export default function Data(props) {
     const [start, setStart] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [conf, setConf] = useState(75);
+    const [isOpen, setIsOpen] = useState(false)
 
     const {
         appliedFilters,
@@ -51,10 +53,13 @@ export default function Data(props) {
         <div>
             <div className="filter-container">
                 <SearchInput searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
+                <button className="toggle" onClick={() => setIsOpen(!isOpen)}>+ Filters</button>
+            </div>
+            <SlidingContainer isOpen={isOpen}>
                 <FilterButtons handleTypeChange={(newType) => handleTypeChange(newType, setFilter, setStart)} />
                 <AppliedFilters appliedFilters={appliedFilters} handleRemoveFilter={(toRemove) => handleRemoveFilter(toRemove, setFilter)} />
                 <ConfidenceSlider conf={conf} handleConfidenceLevel={handleConfidenceLevel} />
-            </div>
+            </SlidingContainer>
             <div className='data-container'>
                 <BurstTable bursts={filteredBursts} start={start} end={end} handleSortChange={(toSort) => handleSortChange(toSort, setSort)} />
             </div>

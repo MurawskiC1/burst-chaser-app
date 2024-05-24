@@ -1,14 +1,13 @@
 import React from "react"
 
-export default function SlidingContainer(props) {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleContainer = () => {
-        setIsOpen(!isOpen)
-    };
+export default function SlidingContainer({ isOpen, children }) {
     return (
         <div>
-            {props.children}
+            <div className={`side-container ${isOpen ? 'open' : ''}`}>
+                <div className="sidebar-contents">
+                    {children}
+                </div>
+            </div>
         </div>
     )
 };

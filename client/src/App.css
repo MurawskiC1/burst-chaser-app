@@ -124,7 +124,7 @@
 /*------------------------------------------DATA-------------------------------------*/
 
 .data-container {
-  margin-top: 10vh;
+  margin-top: 5vh;
   margin-left: 5vw;
   margin-right: 5vw;
   width: 90vw;
@@ -177,25 +177,40 @@
 }
 
 /*-----------------------------------Filters Container-------------------------------*/
-.open-filters {
-  margin-left: 50vw
+.toggle {
+  margin-left: 50vw;
 }
 
-.box {
+.side-container {
   position: fixed;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
   top: 0;
-  margin-top: 80px;
   left: -300px;
-  /* Adjust this value to the width of the box */
+  /* Adjust this value to the width of the container */
   width: 300px;
   /* Adjust this value to your desired width */
-  height: 100%;
-  background-color: lightblue;
+  height: 100vh;
+  background-color: lightgray;
+  /* Background color for the container */
   color: black;
+  /* Text color for contrast */
+  padding: 0;
+  /* Add padding for better text visibility */
   transition: left 0.3s ease;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  /* Add this to handle overflow text */
 }
 
-.box.open {
+.sidebar-contents {
+  height: 80%;
+
+}
+
+.side-container.open {
   left: 0;
 }
