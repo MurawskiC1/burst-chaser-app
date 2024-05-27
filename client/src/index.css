@@ -3,3 +3,10 @@
   padding: 0;
 
 }
+
+button {
+  padding: 5px;
+  border-radius: 5px;
+  border-color: transparent;
+
+}

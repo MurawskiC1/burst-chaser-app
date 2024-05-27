@@ -48,28 +48,46 @@ export default function Data(props) {
     );
 
     const end = start + render;
-
+    const clickOff = () => {
+        if (isOpen === true) {
+            setIsOpen(false)
+        }
+    }
     return (
-        <div>
-            <div className="filter-container">
-                <SearchInput searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
-                <button className="toggle" onClick={() => setIsOpen(!isOpen)}>+ Filters</button>
-            </div>
+        <div >
+
             <SlidingContainer isOpen={isOpen}>
+                <h1>Classification:</h1>
                 <FilterButtons handleTypeChange={(newType) => handleTypeChange(newType, setFilter, setStart)} />
-                <AppliedFilters appliedFilters={appliedFilters} handleRemoveFilter={(toRemove) => handleRemoveFilter(toRemove, setFilter)} />
-                <ConfidenceSlider conf={conf} handleConfidenceLevel={handleConfidenceLevel} />
+                <div className='applied-filter-container'>
+                    <AppliedFilters appliedFilters={appliedFilters} handleRemoveFilter={handleRemoveFilter} setFilter={setFilter} />
+                </div>
+                <h1>Confidence:</h1>
+                <div className='confidence-container'>
+                    <ConfidenceSlider conf={conf} handleConfidenceLevel={handleConfidenceLevel} />
+                </div>
             </SlidingContainer>
-            <div className='data-container'>
-                <BurstTable bursts={filteredBursts} start={start} end={end} handleSortChange={(toSort) => handleSortChange(toSort, setSort)} />
+            <div className="main-page" onClick={() => clickOff()}>
+                <div className="filter-container">
+                    <button className="toggle" onClick={() => setIsOpen(!isOpen)}>+ Filters</button>
+                    <SearchInput searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
+
+                </div>
+
+                <div className='data-container'>
+
+                    <BurstTable bursts={filteredBursts} start={start} end={end} handleSortChange={(toSort) => handleSortChange(toSort, setSort)} />
+                </div>
+                <div className='page-control-container'>
+                    <PaginationControls
+                        start={start}
+                        render={render}
+                        total={filteredBursts.length}
+                        handleChangePage={handleChangePage}
+                        handleLimit={handleLimit}
+                    />
+                </div>
             </div>
-            <PaginationControls
-                start={start}
-                render={render}
-                total={filteredBursts.length}
-                handleChangePage={handleChangePage}
-                handleLimit={handleLimit}
-            />
         </div>
     );
 }

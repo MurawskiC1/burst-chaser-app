@@ -10,7 +10,9 @@ function App() {
 
       <Router>
         <Navbar />
-        <AppRoutes />
+        <div className='page-container'>
+          <AppRoutes />
+        </div>
       </Router>
 
     </>

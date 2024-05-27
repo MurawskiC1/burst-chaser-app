@@ -50,16 +50,26 @@ export const useDataHandlers = (conf, filter, sort, setConf) => {
     };
 
     const handleRemoveFilter = (toRemove, setFilter) => {
-        const updatedFilters = appliedFilters.filter((filter) => filter !== toRemove);
-        setAppliedFilters(updatedFilters);
+        console.log(appliedFilters)
+        setAppliedFilters((prevFilters) => {
 
-        let newFilter = '';
-        updatedFilters.forEach((filter, index) => {
-            newFilter += index === 0 ? `verify LIKE '%${filter}%'` : ` AND verify LIKE '%${filter}%'`;
+            const updatedFilters = []
+            let newFilter = '';
+            prevFilters.forEach((filter, index) => {
+                if (filter != toRemove) {
+                    newFilter += ` AND verify LIKE '${filter}'`
+                    updatedFilters.push(filter)
+                }
+            });
+            console.log(newFilter)
+            setFilter(newFilter);
+            console.log(updatedFilters)
+
+            return updatedFilters;
         });
 
-        setFilter(newFilter);
     };
+
 
     return {
         appliedFilters,
