@@ -1,10 +1,11 @@
 .page-container {
   margin-top: 80px;
+
 }
 
 /*------------------------------------NAVBAR----------------------------------------*/
 .navbar {
-  background-color: Black;
+  background-color: black;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -16,8 +17,6 @@
   height: 80px;
   transition: top 0.3s, height 0.3s;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.341);
-
-
 }
 
 .company {
@@ -26,7 +25,6 @@
 
 .navbar ul {
   max-width: 100%;
-  /* Ensure ul doesn't exceed parent width */
   padding: 0;
   margin: 0;
   margin-right: 20px;
@@ -35,17 +33,14 @@
   text-decoration: none;
   transition: 0.4s;
   overflow-x: auto;
-  /* Add horizontal scroll for overflow */
 }
 
 .navbar li {
-
   margin: 0;
 }
 
 .navbar-buttons {
   font-size: 20px;
-
 }
 
 .navbar a {
@@ -53,7 +48,7 @@
   text-decoration: none;
   height: 100%;
   display: flex;
-  padding: .25rem;
+  padding: 0.25rem;
   align-items: center;
   font-size: 30px;
 }
@@ -61,8 +56,6 @@
 .navbar-button {
   color: gray;
 }
-
-
 
 /* Hamburger menu styles */
 .hamburger-menu {
@@ -98,7 +91,7 @@
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 70px;
+    top: 80px;
     left: 0;
     background-color: purple;
     width: 100%;
@@ -107,13 +100,14 @@
     z-index: 5;
     overflow-x: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.341);
-    /* Hide horizontal scroll for small screens */
   }
 
   .navbar li {
-    font-size: 10px;
+    font-size: 20px;
     display: flex;
     justify-content: center;
+    padding: 10px 0;
+    /* Adjust padding for better spacing */
   }
 
   .navbar ul.active {
@@ -138,6 +132,8 @@
   justify-content: center;
   box-sizing: border-box;
   overflow-y: auto;
+  border: 1px inset lightgray;
+
   /* Ensure padding and borders are included in the element's total width and height */
 }
 
@@ -147,6 +143,8 @@
   /* Ensure table takes full width of the container */
   /* Prevent the table from exceeding container's width */
   border-collapse: collapse;
+
+
 
 
 
@@ -308,4 +306,105 @@
 
 .applied-filter-container {
   height: 20px;
+}
+
+
+/*------------------------------------PREVIEW PAGE----------------------------------*/
+
+.preview {
+  background-color: white;
+  margin-top: 15vh;
+  margin-left: 10vw;
+  width: 80vw;
+  height: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.341);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.name-class {
+  width: 100%;
+  height: 10vh;
+  padding: 10px;
+  display: flex;
+  /* Changed to flex for proper alignment */
+  justify-content: space-between;
+  /* Space out child elements */
+
+  /* Optional: Add padding for better spacing */
+  box-sizing: border-box;
+  /* Ensure padding and border are included in the element's total width and height */
+}
+
+.name {
+  width: 50%;
+  height: 60px;
+  display: flex;
+  /* Complete border property */
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 25px;
+  /* Optional: Set a background color for better visibility */
+}
+
+.classification {
+  width: 50%;
+  height: 10vh;
+
+
+  display: flex;
+  justify-content: center;
+
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.classification p {
+  width: 100%;
+  height: 85%;
+  display: flex;
+  color: whitesmoke;
+  justify-content: center;
+  align-items: center;
+  font-size: 70px;
+}
+
+
+
+.image-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+}
+
+.image-container img {
+  height: 40vh;
+  width: auto;
+}
+
+.preview-info {
+  display: flex;
+  justify-content: space-around;
+}
+
+.questions {
+  width: 35%;
+  padding: 20px;
+  display: inline;
+  justify-content: center;
+  border: 1px solid rgba(128, 128, 128, 0.335);
+}
+
+.questions div {
+  width: 100%;
+  padding: 5px;
+  font-size: 25px;
+}
+
+.divider {
+  font-weight: 50;
+  font-style: normal;
 }
