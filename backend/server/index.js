@@ -71,6 +71,6 @@ app.post(`/${table}`, (req, res) => {
 
 // Start the server on port 8800
 const PORT = 8800;
-app.listen(PORT, () => {
+app.listen(process.env.PORT | gi | PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
