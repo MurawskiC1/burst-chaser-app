@@ -2,9 +2,9 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const table = "pulse_shape"
+
 // Initialize the Express application
 const app = express();
-
 
 // Create a connection to the database
 const db = mysql.createConnection({
@@ -32,31 +32,61 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Express server!');
 });
 
-// Define a route to fetch data from the new_table
+// Define a route to fetch data from the pulse_shape table
 app.get(`/${table}`, (req, res) => {
-    const filter = req.query.filter;// Get filter value from query parameter
-    const sort = req.query.sort;
+    const filter = req.query.filter || ''; // Get filter value from query parameter
+    const sort = req.query.sort || ''; // Get sort value from query parameter
     let select = `SELECT * FROM ${table}`;
     let order = "";
     let where = "";
-    if (sort !== '') {
-        order += ` ORDER BY ${sort}`
+
+    if (sort) {
+        order = ` ORDER BY ${sort}`;
     }
 
-    if (filter !== '') {
-        where += ` WHERE ${filter}`;
+    if (filter) {
+        where = ` WHERE ${filter}`;
     }
-    const q = select + where + order
+
+    const q = select + where + order;
     db.query(q, (err, data) => {
-        if (err) return res.json(err);
+        if (err) {
+            console.error('Error fetching data:', err);
+            return res.status(500).json({ error: err.message });
+        }
         return res.json(data); // Return the data to the client
     });
 });
 
+// Define a route to fetch data from the comments table
+app.get(`/comments`, (req, res) => {
+    const filter = req.query.filter || ''; // Get filter value from query parameter
+    const sort = req.query.sort || ''; // Get sort value from query parameter
+    let select = `SELECT * FROM comments`; // Ensure correct table name
+    let order = "";
+    let where = "";
 
+    if (sort) {
+        order = ` ORDER BY ${sort}`;
+    }
 
+    if (filter) {
+        where = ` WHERE ${filter}`;
+    }
+
+    const q = select + where + order;
+    db.query(q, (err, data) => {
+        if (err) {
+            console.error('Error fetching data:', err);
+            return res.status(500).json({ error: err.message });
+        }
+        return res.json(data); // Return the data to the client
+    });
+});
+
+// Define a route to insert data into the pulse_shape table
 app.post(`/${table}`, (req, res) => {
-    const q = "INSERT INTO new_table (`name`, `description`, `number`) VALUES (?)";
+    const q = `INSERT INTO ${table} (\`name\`, \`description\`, \`number\`) VALUES (?)`;
     const values = [
         req.body.name,
         req.body.description,
@@ -64,13 +94,16 @@ app.post(`/${table}`, (req, res) => {
     ];
 
     db.query(q, [values], (err, data) => {
-        if (err) return res.json(err);
+        if (err) {
+            console.error('Error inserting data:', err);
+            return res.status(500).json({ error: err.message });
+        }
         return res.json("Successful Data Creation");
     });
 });
 
 // Start the server on port 8800
 const PORT = 8800;
-app.listen(process.env.PORT | gi | PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
