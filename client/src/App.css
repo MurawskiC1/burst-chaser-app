@@ -5,8 +5,8 @@
 
 /*------------------------------------NAVBAR----------------------------------------*/
 .navbar {
-  background-color: black;
-  color: white;
+  background: rgba(0, 0, 0, 0.923);
+  color: rgba(255, 255, 255, 0.971);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -15,7 +15,7 @@
   z-index: 5;
   width: 100%;
   height: 80px;
-  transition: top 0.3s, height 0.3s;
+  transition: top 0.3s, height 0.3s, background 1s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.341);
 }
 
@@ -25,17 +25,23 @@
 
 .navbar ul {
   max-width: 100%;
+  width: 30vw;
+  color: rgb(163, 228, 252);
   padding: 0;
   margin: 0;
   margin-right: 20px;
   list-style: none;
   display: flex;
   text-decoration: none;
-  transition: 0.4s;
+
   overflow-x: auto;
+  justify-content: space-between;
+
+
 }
 
 .navbar li {
+
   margin: 0;
 }
 
@@ -67,7 +73,8 @@
 .bar {
   width: 25px;
   height: 3px;
-  background-color: white;
+  background-color: rgb(163, 228, 252);
+
   margin: 5px 0;
   transition: 0.4s;
 }
@@ -85,6 +92,11 @@
   transform: rotate(45deg) translate(-5px, -6px);
 }
 
+/* Change navbar background when ul is active */
+.navbar:has(ul.active) {
+  background: black;
+}
+
 /* Media query for smaller screens */
 @media screen and (max-width: 1000px) {
   .navbar ul {
@@ -93,13 +105,13 @@
     position: absolute;
     top: 80px;
     left: 0;
-    background-color: purple;
+    background: black;
     width: 100%;
     height: auto;
     padding: 20px;
     z-index: 5;
     overflow-x: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.341);
+    transition: display 0.5s ease-in;
   }
 
   .navbar li {
@@ -119,6 +131,7 @@
     display: block;
   }
 }
+
 
 /*------------------------------------------DATA-------------------------------------*/
 
@@ -197,7 +210,7 @@
   width: 400px;
   /* Adjust this value to your desired width */
   height: 100vh;
-  background-color: lightgray;
+  background-color: rgb(211, 211, 211);
   /* Background color for the container */
   color: black;
   /* Text color for contrast */
@@ -320,6 +333,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.341);
   border-radius: 5px;
   padding: 10px;
+
 }
 
 .name-class {
@@ -407,4 +421,166 @@
 .divider {
   font-weight: 50;
   font-style: normal;
+}
+
+
+
+.comments {
+  height: auto;
+  padding: 20px;
+  display: inline;
+  justify-content: center;
+}
+
+.comment {
+  background-color: whitesmoke;
+  margin: 5px;
+  margin-top: 0;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.comment-info {
+  width: 90%;
+}
+
+.comment-username {
+  font-size: Larger;
+  font-weight: 700;
+  padding: 10px;
+}
+
+.comment-body {
+  margin: 40px;
+  margin-bottom: 0px;
+  margin-top: 10px;
+  padding-bottom: 20px;
+
+}
+
+.comment-vote {
+
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vote-button {
+  display: inline;
+  font-size: 20px;
+  font-weight: 900;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.upvote {
+  color: green;
+
+
+}
+
+.downvote {
+  color: red;
+  transform: rotate(180deg);
+}
+
+.tags {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.tag {
+  border: 1px solid rgb(118, 218, 255);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.home {
+  display: flex;
+}
+
+.home-search {
+  width: 50vw;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-search-buttons {
+  display: inline;
+}
+
+.search-button {
+  width: 100%;
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+}
+
+
+/*----------------------------------------CLASSIFY----------------------------------------------------------*/
+.classify-page {
+  display: flex;
+}
+
+.classify-container {
+  width: 60vw;
+  height: 80vh;
+
+
+}
+
+.draggable {
+  display: inline-block;
+  user-select: none;
+  position: absolute;
+}
+
+.burst-container {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+}
+
+
+.drag-container {
+  width: auto;
+  height: 200px;
+
+  padding: 2px;
+  background-color: rgb(118, 218, 255);
+}
+
+.drag-container img {
+  height: 100%;
+  width: auto;
+}
+
+.classify-buttons {
+  width: 100%;
+
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.classify-buttons button {
+  width: 100px;
+  height: 40px;
+}
+
+.comments-container {
+
+  width: 40vw;
+  height: 90vh;
+  background-color: rgb(72, 71, 71);
 }

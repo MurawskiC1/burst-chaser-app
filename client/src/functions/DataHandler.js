@@ -4,7 +4,7 @@ import { useBursts } from '../functions/Exports';
 export const useDataHandlers = (conf, filter, sort, setConf) => {
     const [appliedFilters, setAppliedFilters] = useState([]);
     const [confFilter, setConfFilter] = useState(`Primary_Confidence_Level >= ${conf / 100}`);
-    const bursts = useBursts("pulse_shape", confFilter + filter, sort);
+    const bursts = useBursts(confFilter + filter, sort);
 
     useEffect(() => {
         setConfFilter(`Primary_Confidence_Level >= ${conf / 100}`);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export function BurstTable({ bursts, start, end, handleSortChange }) {
+export function BurstTable({ bursts, start, end, comments, handleSortChange }) {
     return (
         <table className="view-boxes">
             <thead>
@@ -24,6 +24,7 @@ export function BurstTable({ bursts, start, end, handleSortChange }) {
                         <td><img src={`/BurstPhotos/${burst.Burst_PNG}`} alt={burst.Burst_Name} /></td>
                         <td><Link to={`${burst.Burst_Name}`}>{burst.Burst_Name}</Link></td>
                         <td>{burst.BurstID}</td>
+
                         <td>{burst.Simple}</td>
                         <td>{burst.Extended}</td>
                         <td>{burst.Other}</td>

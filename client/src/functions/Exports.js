@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export function useBursts(table, filter = '', sort = '') {
+export function useBursts(filter = '', sort = '') {
     const [out, setOut] = useState([]);
 
     useEffect(() => {
         const fetchAllBursts = async () => {
             try {
-                const res = await axios.get(`http://localhost:8800/${table}`, {
+                const res = await axios.get(`http://localhost:8800/pulse_shape`, {
                     params: {
                         filter: filter,
                         sort: sort
@@ -19,7 +19,7 @@ export function useBursts(table, filter = '', sort = '') {
             }
         };
         fetchAllBursts();
-    }, [table, filter, sort]); // Include table, filter, and sort in the dependency array
+    }, [filter, sort]); // Include table, filter, and sort in the dependency array
 
     return out;
 }
@@ -42,6 +42,29 @@ export function useComments(filter = '', sort = '') {
             }
         };
         fetchAllComments();
+    }, [filter, sort]); // Include filter and sort in the dependency array
+
+    return out;
+}
+
+export function useTags(filter = '', sort = '') {
+    const [out, setOut] = useState([]);
+
+    useEffect(() => {
+        const fetchAllTags = async () => {
+            try {
+                const res = await axios.get(`http://localhost:8800/tags`, {
+                    params: {
+                        filter: filter,
+                        sort: sort
+                    }
+                });
+                setOut(res.data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchAllTags();
     }, [filter, sort]); // Include filter and sort in the dependency array
 
     return out;

@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { FilterButtons, AppliedFilters, ConfidenceSlider } from '../components/FilterComponents';
-import { SearchInput } from '../components/SearchInput'
+import { SearchInput } from '../components/SearchInput';
 import { BurstTable } from '../components/BurstTable';
 import { PaginationControls } from '../components/PaginationControls';
 import { useDataHandlers } from '../functions/DataHandler';
 import SlidingContainer from '../components/SlidingContainer';
-export default function Data(props) {
+import { useComments } from '../functions/Exports';
+
+export default function Data() {
+    const location = useLocation();
+    const [searchQuery, setSearchQuery] = useState(new URLSearchParams(location.search).get('search') || '');
+
     const [filter, setFilter] = useState('');
     const [sort, setSort] = useState('');
     const [render, setRender] = useState(50);
     const [start, setStart] = useState(0);
-    const [searchQuery, setSearchQuery] = useState('');
     const [conf, setConf] = useState(75);
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+
+    const comments = useComments();
 
     const {
         appliedFilters,
@@ -48,14 +55,19 @@ export default function Data(props) {
     );
 
     const end = start + render;
+
     const clickOff = () => {
         if (isOpen === true) {
-            setIsOpen(false)
+            setIsOpen(false);
         }
-    }
-    return (
-        <div >
+    };
 
+    useEffect(() => {
+        // Fetch data or perform operations based on searchQuery change
+    }, [searchQuery]);
+
+    return (
+        <div>
             <SlidingContainer isOpen={isOpen}>
                 <h1>Classification:</h1>
                 <FilterButtons handleTypeChange={(newType) => handleTypeChange(newType, setFilter, setStart)} />
@@ -71,12 +83,9 @@ export default function Data(props) {
                 <div className="filter-container">
                     <button className="toggle" onClick={() => setIsOpen(!isOpen)}>+ Filters</button>
                     <SearchInput searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
-
                 </div>
-
                 <div className='data-container'>
-
-                    <BurstTable bursts={filteredBursts} start={start} end={end} handleSortChange={(toSort) => handleSortChange(toSort, setSort)} />
+                    <BurstTable bursts={filteredBursts} start={start} end={end} comments={comments} handleSortChange={(toSort) => handleSortChange(toSort, setSort)} />
                 </div>
                 <div className='page-control-container'>
                     <PaginationControls

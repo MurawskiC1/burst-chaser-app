@@ -1,10 +1,10 @@
 import React from "react";
-import { useComments } from "../functions/Exports";
+import { useComments, useTags } from "../functions/Exports";
 
 export default function Preview(props) {
     const burst = props.burst;
     const comments = useComments(`comment_focus_id = ${parseInt(burst.BurstID)}`);
-
+    const tags = useTags(`taggable_id = ${parseInt(burst.BurstID)}`)
     console.log(comments);
 
     return (
@@ -37,11 +37,47 @@ export default function Preview(props) {
                     <div>Underlying Emission: {burst.UnderlyingEmission}</div>
                     <div>Rapidly Varying Pulses: {burst.RapidlyVarying}</div>
                 </div>
+
+            </div>
+            <div className="thread">
                 <div className="comments">
                     {comments.map((c, index) => (
-                        <h1 key={index}>{c.comment_body}</h1>
+
+                        <div className="comment" key={index}>
+                            <div className="comment-info">
+                                <div className="comment-username">
+                                    {c.comment_user_login}
+                                </div>
+                                <div className="comment-body">
+                                    <p>
+                                        {c.comment_body}
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div className="comment-vote">
+                                <div className="vote-button">
+                                    <div className="upvote">
+                                        ^
+                                    </div>
+                                    <div className="downvote">
+                                        ^
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
                     ))}
                 </div>
+            </div>
+            <div className="tags">
+                {tags.map((t, index) => (
+                    <div className="tag" key={index}>
+                        {t.name}
+                    </div>
+                ))}
             </div>
         </div>
     );
