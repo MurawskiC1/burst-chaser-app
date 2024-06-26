@@ -44,7 +44,7 @@ export default function Navbar() {
                     </Link>
                 </li>
                 <li>
-                    <Link to="data" onClick={handleLinkClick}>
+                    <Link to="download" onClick={handleLinkClick}>
                         <h1 className="navbar-buttons">Download</h1>
                     </Link>
                 </li>
