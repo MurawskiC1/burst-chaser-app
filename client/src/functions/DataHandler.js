@@ -3,11 +3,12 @@ import { useBursts } from '../functions/Exports';
 
 export const useDataHandlers = (conf, filter, sort, setConf) => {
     const [appliedFilters, setAppliedFilters] = useState([]);
-    const [confFilter, setConfFilter] = useState(`Primary_Confidence_Level >= ${conf / 100}`);
+    const [confFilter, setConfFilter] = useState(`Final_Confidence >= ${conf / 100}`);
+    console.log(confFilter)
     const bursts = useBursts(confFilter + filter, sort);
 
     useEffect(() => {
-        setConfFilter(`Primary_Confidence_Level >= ${conf / 100}`);
+        setConfFilter(`Final_Confidence >= ${conf / 100}`);
     }, [conf]);
 
     const handleTypeChange = (newType, setFilter, setStart) => {
@@ -36,7 +37,7 @@ export const useDataHandlers = (conf, filter, sort, setConf) => {
 
     const handleConfidenceLevel = (level) => {
         setConf(level);
-        setConfFilter(`Primary_Confidence_Level >= ${level / 100}`);
+        setConfFilter(`Final_Confidence >= ${level / 100}`);
     };
 
     const handleSortChange = (toSort, setSort) => {

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SearchInput } from '../components/SearchInput';
+import { useComments } from '../functions/Exports';
+import Post from '../components/Post';
 
 export default function Home(props) {
     const [searchQuery, setSearchQuery] = useState('');
-
+    const comments = useComments('', 'comment_created_at DESC')
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
+    console.log(comments)
 
     return (
         <div className="home">
@@ -25,8 +28,14 @@ export default function Home(props) {
                     </div>
                 </div>
             </div>
-            <div>
-                hello
+            <div className='post-feed'>
+                <div className='post-container'>
+                    {comments.slice(0, 10).map((comment, index) => (
+                        <Post key={index} user={comment.comment_user_login} burstID={comment.comment_focus_id} comment={comment.comment_body}
+                        />
+
+                    ))}
+                </div>
             </div>
         </div>
     );

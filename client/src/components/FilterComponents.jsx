@@ -35,7 +35,7 @@ import React from 'react';
 export function ConfidenceSlider({ conf, handleConfidenceLevel }) {
     return (
         <div className="confidence-level">
-            <input className="slide" type="range" value={conf} min="75" max="100" onChange={(e) => handleConfidenceLevel(e.target.value)} />
+            <input className="slide" type="range" value={conf} min="0" max="100" onChange={(e) => handleConfidenceLevel(e.target.value)} />
             {conf}%
         </div>
     );

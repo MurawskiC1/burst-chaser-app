@@ -15,6 +15,7 @@ export function BurstTable({ bursts, start, end, comments, handleSortChange }) {
                     <th onClick={() => handleSortChange("Other")}>Other</th>
                     <th onClick={() => handleSortChange("Too_Noisy")}>Too Noisy</th>
                     <th onClick={() => handleSortChange("verify")}>Verified</th>
+                    <th onClick={() => handleSortChange("Final_Confidence")}>Confidence</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +31,7 @@ export function BurstTable({ bursts, start, end, comments, handleSortChange }) {
                         <td>{burst.Other}</td>
                         <td>{burst.Too_Noisy}</td>
                         <td>{burst.Verify}</td>
+                        <td>{burst.Final_Confidence.toFixed(2)}</td>
                     </tr>
                 ))}
             </tbody>

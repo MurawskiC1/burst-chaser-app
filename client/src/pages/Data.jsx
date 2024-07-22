@@ -16,7 +16,7 @@ export default function Data() {
     const [sort, setSort] = useState('');
     const [render, setRender] = useState(50);
     const [start, setStart] = useState(0);
-    const [conf, setConf] = useState(75);
+    const [conf, setConf] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
 
     const comments = useComments();
@@ -67,7 +67,7 @@ export default function Data() {
     }, [searchQuery]);
 
     return (
-        <div>
+        <div className='data-page'>
             <SlidingContainer isOpen={isOpen}>
                 <h1>Classification:</h1>
                 <FilterButtons handleTypeChange={(newType) => handleTypeChange(newType, setFilter, setStart)} />
