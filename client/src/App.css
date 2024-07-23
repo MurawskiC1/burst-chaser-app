@@ -618,9 +618,17 @@
   align-items: center;
 }
 
-.comment-box-container textarea {
-  height: 70%;
-  width: 90%;
+.withpost {
+  width: 70%;
+  height: 90%;
+  background-color: blue;
+  display: inline;
+  justify-content: center;
+}
+
+.withpost textarea {
+  height: 100%;
+  width: 100%;
   padding: 10px;
 }
 

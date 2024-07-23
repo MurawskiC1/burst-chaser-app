@@ -21,7 +21,7 @@ export function FilterButtons({ handleTypeChange }) {
                 <button onClick={() => handleTypeChange('Other')}>Other</button>
             </div>
             <div className='filter-buttons-space'>
-                <button onClick={() => handleTypeChange('Too Noisy')}>Too Noisy</button>
+                <button onClick={() => handleTypeChange('Too_Noisy')}>Too Noisy</button>
                 <button onClick={() => handleTypeChange(null)}>Not Classified</button>
             </div>
         </div >

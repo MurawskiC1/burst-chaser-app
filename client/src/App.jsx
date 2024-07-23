@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     const handleMouseMove = (event) => {
-      const hoverAreaHeight = 50; // The height of the area at the bottom where hover triggers the footer
+      const hoverAreaHeight = 10; // The height of the area at the bottom where hover triggers the footer
       if (window.innerHeight - event.clientY <= hoverAreaHeight) {
         setFooterVisible(true);
       } else {

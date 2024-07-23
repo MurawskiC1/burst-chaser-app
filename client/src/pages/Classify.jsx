@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Comments from "../components/Comments";
-import { useComments } from "../functions/Exports";
 
 const Classify = () => {
     const [bursts, setBursts] = useState([]);
     const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState("");
+
 
     // Fetch all bursts when the component mounts
     useEffect(() => {
@@ -27,7 +28,6 @@ const Classify = () => {
 
     // Fetch comments when bursts change
     useEffect(() => {
-
         const fetchAllComments = async () => {
             try {
                 const res = await axios.get(`http://localhost:8800/comments`, {
@@ -66,6 +66,33 @@ const Classify = () => {
         event.preventDefault();
     };
 
+    const handleCommentSubmit = async () => {
+        const data = {
+            comment_id: '1',
+            comment_body: newComment,
+            comment_focus_id: bursts[0].BurstID,
+            comment_user_id: '456', // replace with actual user ID
+            comment_user_login: 'user123', // replace with actual user login
+            comment_created_at: new Date().toISOString()
+        };
+
+        try {
+            const response = await axios.post('http://localhost:8800/comments', data);
+            console.log('Response:', response.data);
+            setComments([...comments, data]);
+            setNewComment(""); // clear the textarea
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+        }
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // prevent the default behavior of Enter key
+            handleCommentSubmit();
+        }
+    };
+
     return (
         <div className="classify-page">
             <div className="classify-container">
@@ -95,6 +122,17 @@ const Classify = () => {
             </div>
             <div className="comments-container">
                 <Comments comments={comments} />
+                <div className="comment-box-container">
+                    <div className="withpost">
+                        <textarea
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            placeholder="Write a comment..."
+                        ></textarea>
+                        <button onClick={handleCommentSubmit}>Post</button>
+                    </div>
+                </div>
             </div>
         </div>
     );
