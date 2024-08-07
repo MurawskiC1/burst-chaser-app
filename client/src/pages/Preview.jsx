@@ -36,7 +36,8 @@ export default function Preview(props) {
             comment_focus_id: burst.BurstID,
             comment_user_id: '456', // replace with actual user ID
             comment_user_login: 'user123', // replace with actual user login
-            comment_created_at: new Date().toISOString()
+            comment_created_at: new Date().toISOString(),
+            votes: 0
         };
 
         try {
@@ -55,6 +56,10 @@ export default function Preview(props) {
             handleCommentSubmit();
         }
     };
+
+    const handleUpvote = (event) => {
+
+    }
 
     return (
         <div className="preview">

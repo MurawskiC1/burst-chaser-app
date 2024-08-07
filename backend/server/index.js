@@ -130,7 +130,7 @@ app.get(`/tags`, (req, res) => {
 });
 // Define a route to insert data into the pulse_shape table
 app.post(`/comments`, (req, res) => {
-    const q = `INSERT INTO comments (\`comment_id\`, \`comment_body\`, \`comment_focus_id\`,\`comment_user_id\`,\`comment_user_login\`,\`comment_created_at\`) VALUES (?)`;
+    const q = `INSERT INTO comments (\`comment_id\`, \`comment_body\`, \`comment_focus_id\`,\`comment_user_id\`,\`comment_user_login\`,\`comment_created_at\`,\`votes\`) VALUES (?)`;
     const values = [
         req.body.comment_id,
         req.body.comment_body,
@@ -138,6 +138,7 @@ app.post(`/comments`, (req, res) => {
         req.body.comment_user_id,
         req.body.comment_user_login,
         req.body.comment_created_at,
+        req.body.votes
     ];
 
     db.query(q, [values], (err, data) => {
