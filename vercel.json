@@ -1,6 +1,5 @@
 {
     "version": 2,
-    "name": "burst-chaser-app",
     "builds": [
         {
             "src": "client/package.json",
