@@ -8,10 +8,11 @@ const app = express();
 
 // Create a connection to the database
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Cartbellot4tis",
-    database: "burst_chaser"
+    host: "burstchaser.chc6og84q0nv.us-east-2.rds.amazonaws.com",
+    user: "burstchaser",
+    password: "Cartbellot4ti$",
+    database: "burstchaser",
+    port: 3306
 });
 
 // Connect to the database and handle any connection errors
